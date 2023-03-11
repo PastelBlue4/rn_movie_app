@@ -8,21 +8,24 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
 
-  // useEffect(() => {
-  //   async function prepare() {
-  //     try {
-  //       // const getData = async () => {
-  //       //   setTimeout();
-  //       };
-  //     } catch (e) {
-  //       console.warn(e);
-  //     } finally {
-  //       setAppIsReady(true);
-  //     }
-  //   }
+  useEffect(() => {
+    async function prepare() {
+      try {
+        const getData = async () => {
+          setTimeout(() => {
+            setAppIsReady(true);
+          }, 5000);
+        };
+        getData();
+      } catch (e) {
+        console.log(e);
+      } finally {
+        console.log('loading done');
+      }
+    }
 
-  //   prepare();
-  // }, []);
+    prepare();
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
@@ -32,14 +35,14 @@ export default function App() {
 
   if (!appIsReady) {
     return null;
+  } else {
+    return (
+      <View
+        style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+        onLayout={onLayoutRootView}>
+        <Text>SplashScreen Demo! dsadsa 👋</Text>
+        <Entypo name="rocket" size={30} />
+      </View>
+    );
   }
-
-  return (
-    <View
-      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
-      onLayout={onLayoutRootView}>
-      <Text>SplashScreen Demo! 👋</Text>
-      <Entypo name="rocket" size={30} />
-    </View>
-  );
 }
